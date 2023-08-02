@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">REGISTRO DE PARTICIPANTES</h1>
+            <div class="col-12">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Nombre del participante</mat-label>
+                    <input (keydown.enter)="addCompetitor()" [(ngModel)]="name" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-12">
+                <mat-list>
+                    <mat-list-item *ngFor="let folder of participantService.participants; let i=index">
+                        <mat-icon matListItemIcon>account_circle</mat-icon>
+                        <div matListItemTitle>{{folder.name|titlecase}}</div>
+                        <div matListItemMeta></div>
+                        <button (click)="removeCompetior(i)" matListItemMeta mat-icon-button
+                            aria-label="Example icon button with a vertical three dot icon">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </mat-list>
+            </div>
+            <div class="col-12 text-center">
+                <button [disabled]="disableStart" (click)="start()" mat-fab extended color="primary">
+                    <mat-icon>play_arrow</mat-icon>
+                    INICIAR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
