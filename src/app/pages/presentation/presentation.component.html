@@ -1,5 +1,13 @@
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="col-2">
+            <button (click)="reset()" class="btn btn__continue">REINICIAR</button>
+        </div>
+    </div>
+</div>
+
 <div class="d-flex justify-content-center">
-    <div *ngIf="winner" class="results-summary-container">
+    <div *ngIf="winner" class="results-summary-container mt-5">
         <div class="confetti">
             <div class="confetti-piece"></div>
             <div class="confetti-piece"></div>
@@ -31,13 +39,7 @@
                 <div class="heading-secondary">{{winner.name}}</div>
             </div>
         </div>
-        <div class="results-summary-container__options">
-            <div class="heading-secondary heading-secondary--blue"></div>
-            <div class="summary-result-options">
-                <div class="summary__cta">
-                    <button (click)="reset()" class="btn btn__continue">REINICIAR</button>
-                </div>
-            </div>
-        </div>
+
     </div>
+
 </div>

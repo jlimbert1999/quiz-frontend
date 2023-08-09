@@ -1,95 +1,113 @@
-<div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card user1">
-                <div class="card-body">
-                    <div class="d-flex align-items-center position-relative pb-3">
-                        <div class="flex-shrink-0">
-                            <img class="img-md rounded-circle" src="../../../assets/competitor1.png"
-                                alt="Profile Picture" loading="lazy">
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h3 class="fw-bold">Participante: {{participantService.participants[0].name}}</h3>
-                            <p class="mt-2">PUNTAJE: {{participantService.participants[0].score}} </p>
-                        </div>
-                    </div>
-                    <div class="pt-2 text-center border-top">
-                        <button (click)="removeScore(0)" mat-mini-fab color="primary"
-                            aria-label="Example icon button with a menu icon">
-                            <mat-icon>remove</mat-icon>
+<div class="container-fluid">
+    <div class="row p-3">
+        <div class="col-sm-5">
+            <div class="contact-box user1 center-version shadow-lg rounded">
+                <a href="#profile.html">
+                    <img alt="image" class="img-circle" src="../../../assets/competitor1.png">
+                </a>
+                <div class="p-3 text-center">
+                    <mat-form-field class="example-form-field">
+                        <mat-label>Participante 1</mat-label>
+                        <input [(ngModel)]="participantService.participants[0].name" matInput type="text">
+                        <button matSuffix mat-icon-button aria-label="Clear">
+                            <mat-icon>close</mat-icon>
                         </button>
-                        <button (click)="addScore(0)" mat-mini-fab color="primary"
-                            aria-label="Example icon button with a menu icon">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                    </div>
+                    </mat-form-field>
+                    <p class="fw-bold">PUNTAJE: {{participantService.participants[0].score}}</p>
+                </div>
+
+                <div class="contact-box-footer">
+                    <button (click)="removeScore(0)" mat-mini-fab color="primary"
+                        aria-label="Example icon button with a menu icon">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <button (click)="addScore(0)" mat-mini-fab color="primary"
+                        aria-label="Example icon button with a menu icon">
+                        <mat-icon>add</mat-icon>
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card user2">
-                <div class="card-body">
-                    <div class="d-flex align-items-center position-relative pb-3">
-                        <div class="flex-shrink-0">
-                            <img class="img-md rounded-circle" src="../../../assets/competitor2.png"
-                                alt="Profile Picture" loading="lazy">
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h3 class="fw-bold">{{participantService.participants[1].name}}</h3>
-                            <p class="mt-2">PUNTAJE: {{participantService.participants[1].score}} </p>
-                        </div>
-                    </div>
-                    <div class="pt-2 text-center border-top">
-                        <button (click)="removeScore(1)" mat-mini-fab color="primary"
-                            aria-label="Example icon button with a menu icon">
-                            <mat-icon>remove</mat-icon>
+        <div class="col d-flex justify-content-center  align-items-center fs-1 mt-3 mb-3">
+            VS
+        </div>
+        <div class="col-sm-5">
+            <div class="contact-box user2 center-version shadow-lg rounded">
+                <a>
+                    <img alt="image" class="img-circle" src="../../../assets/competitor2.png">
+                </a>
+                <div class="p-3 text-center">
+                    <mat-form-field class="example-form-field">
+                        <mat-label>Participante 2</mat-label>
+                        <input  [(ngModel)]="participantService.participants[1].name" matInput type="text">
+                        <button matSuffix mat-icon-button aria-label="Clear">
+                            <mat-icon>close</mat-icon>
                         </button>
-                        <button (click)="addScore(1)" mat-mini-fab color="primary"
-                            aria-label="Example icon button with a menu icon">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                    </div>
+                    </mat-form-field>
+                    <p class="fw-bold">PUNTAJE: {{participantService.participants[1].score}}</p>
+                </div>
+
+                <div class="contact-box-footer">
+                    <button (click)="removeScore(1)" mat-mini-fab color="primary"
+                        aria-label="Example icon button with a menu icon">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <button (click)="addScore(1)" mat-mini-fab color="primary"
+                        aria-label="Example icon button with a menu icon">
+                        <mat-icon>add</mat-icon>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="d-flex justify-content-center">
-    <div id="display-container">
-        <div class="header">
-            <div class="number-of-count">
-                <span class="number-of-question">1 de {{questionService.gameRounds}} preguntas</span>
+    <div class="d-flex justify-content-center" style="width: 70;">
+        <div *ngIf="started; else startTemplate">
+            <div id="display-container">
+                <div class="header">
+                    <div class="number-of-count">
+                        <span class="number-of-question fs-4">AREA: {{questionService.area}}</span>
+                    </div>
+                </div>
+                <div class="mb-5" *ngIf="question">
+                    <h1 class="fw-bold"> {{question.name}}:</h1>
+                    <div class="row" *ngFor="let item of question.options; let i=index">
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <p class="fw-bold fs-5">{{i+1}})</p>
+                        </div>
+                        <div class="col-11">
+                            <button appBackground [isCorrect]="item.correct" [disabled]="answered"
+                                (click)="answered=true" class="option-div"
+                                style="font-size: 20px;">{{item.name}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-between">
+                    <button (click)="getQuestion()" mat-fab extended style="background-color: #FF006E;">
+                        <mat-icon>restart_alt</mat-icon>
+                        Restablecer
+                    </button>
+                    <button (click)="endMatch()" mat-fab extended style="background-color: #FFBE0B;">
+                        <mat-icon>power_settings_new</mat-icon>
+                        Finalizar
+                    </button>
+                    <button (click)="nextQuestion()" mat-fab extended style="background-color: #3A86FF;">
+                        <mat-icon>navigate_next</mat-icon>
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+            <div class="score-container hide">
+                <div id="user-score">Demo Score</div>
+                <button id="restart">Restart</button>
             </div>
         </div>
-        <div class="mb-5" *ngIf="question">
-            <h1 class="fw-bold"> {{question.name}}:</h1>
-            <div class="row" *ngFor="let item of question.options; let i=index">
-                <div class="col-1 d-flex align-items-center justify-content-center">
-                    <p class="fw-bold fs-5">{{i+1}})</p>
-                </div>
-                <div class="col-11">
-                    <button appBackground [isCorrect]="item.correct" [disabled]="answered" (click)="answered=true"
-                        class="option-div" style="font-size: 20px;">{{item.name}}</button>
-                </div>
-            </div>
-        </div>
-        <div class="row d-flex justify-content-between">
-            <button (click)="getQuestion()" mat-fab extended style="background-color: #FF006E;">
-                <mat-icon>restart_alt</mat-icon>
-                Restablecer
+        <ng-template #startTemplate>
+            <button (click)="start()" mat-fab extended color="primary" class="mt-5">
+                <mat-icon>play_arrow</mat-icon>
+                INICIAR
             </button>
-            <button (click)="endMatch()" mat-fab extended style="background-color: #FFBE0B;">
-                <mat-icon>power_settings_new</mat-icon>
-                Finalizar
-            </button>
-            <button (click)="nextQuestion()" mat-fab extended style="background-color: #3A86FF;">
-                <mat-icon>navigate_next</mat-icon>
-                Siguiente
-            </button>
-        </div>
-    </div>
-    <div class="score-container hide">
-        <div id="user-score">Demo Score</div>
-        <button id="restart">Restart</button>
+
+        </ng-template>
+
     </div>
 </div>

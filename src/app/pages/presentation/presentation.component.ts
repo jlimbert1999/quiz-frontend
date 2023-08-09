@@ -17,17 +17,14 @@ export class PresentationComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    if (this.participantService.participants.length === 0) {
-      this.router.navigate(['register'])
-      return
-    }
     this.winner = this.participantService.participants.reduce((maxParticipant, currentParticipant) => {
       return currentParticipant.score > maxParticipant.score ? currentParticipant : maxParticipant;
     }, this.participantService.participants[0]);
   }
 
   reset() {
-    this.questionService.reset()
+    this.questionService.reset().subscribe(_ => this.router.navigate(['/']))
+
   }
 
 

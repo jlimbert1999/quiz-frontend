@@ -10,6 +10,7 @@ import { QuestionService } from 'src/app/services/question.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  started: boolean = false
   question: question
   answered: boolean = false
   currentRoud = 0
@@ -21,14 +22,9 @@ export class HomeComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    if (this.participantService.participants.length === 0) {
-      this.router.navigate(['register'])
-      return
-    }
-    this.getQuestion()
   }
   getQuestion() {
-    this.questionService.getQuestion().subscribe(data => {
+    this.questionService.getQuestion(this.questionService.area).subscribe(data => {
       data.options = data.options.sort(() => Math.random() - 0.5)
       this.question = data
     })
@@ -46,7 +42,7 @@ export class HomeComponent implements OnInit {
     if (!this.question || !this.answered) {
       return
     }
-    this.questionService.getNextQuestion(this.question._id).subscribe(data => {
+    this.questionService.getNextQuestion(this.question._id, this.questionService.area).subscribe(data => {
       this.answered = false
       data.options = data.options.sort(() => Math.random() - 0.5)
       this.question = data
@@ -57,6 +53,14 @@ export class HomeComponent implements OnInit {
     if (this.participantService.participants[0].score === this.participantService.participants[1].score) return
     this.router.navigate(['presentation'])
 
+  }
+
+  start() {
+    if (this.questionService.area !== '') {
+      this.started = true
+      this.getQuestion()
+    }
+    return
   }
 
 

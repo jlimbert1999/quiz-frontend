@@ -7,7 +7,16 @@ export interface participant {
   providedIn: 'root'
 })
 export class ParticipantService {
-  participants: participant[] = []
+  participants: participant[] = [
+    {
+      name: '',
+      score: 0
+    },
+    {
+      name: '',
+      score: 0
+    }
+  ]
   constructor() { }
 
 
