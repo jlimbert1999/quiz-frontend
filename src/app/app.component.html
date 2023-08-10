@@ -28,11 +28,13 @@
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>settings</mat-icon></button>
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav position="end" #snav [mode]="mobileQuery.matches ? 'over' : 'over'"
-            [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [opened]="true">
+        <mat-sidenav position="end" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+            [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
             <mat-selection-list #shoes [multiple]="false">
                 <div mat-subheader>Seleccione el area:</div>
+                <mat-divider></mat-divider>
                 <mat-list-option *ngFor="let nav of options" (click)="selectArea(nav)">
+                    <mat-icon matListItemIcon>school</mat-icon>
                     {{nav}}
                 </mat-list-option>
             </mat-selection-list>

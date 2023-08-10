@@ -13,7 +13,7 @@
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
-                    <p class="fw-bold">PUNTAJE: {{participantService.participants[0].score}}</p>
+                    <p class="fw-bold fs-4">PUNTAJE: {{participantService.participants[0].score}}</p>
                 </div>
 
                 <div class="contact-box-footer">
@@ -39,12 +39,12 @@
                 <div class="p-3 text-center">
                     <mat-form-field class="example-form-field">
                         <mat-label>Participante 2</mat-label>
-                        <input  [(ngModel)]="participantService.participants[1].name" matInput type="text">
+                        <input [(ngModel)]="participantService.participants[1].name" matInput type="text">
                         <button matSuffix mat-icon-button aria-label="Clear">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
-                    <p class="fw-bold">PUNTAJE: {{participantService.participants[1].score}}</p>
+                    <p class="fw-bold fs-4">PUNTAJE: {{participantService.participants[1].score}}</p>
                 </div>
 
                 <div class="contact-box-footer">
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center" style="width: 70;">
+    <!-- <div class="d-flex justify-content-center" style="width: 70;">
         <div *ngIf="started; else startTemplate">
             <div id="display-container">
                 <div class="header">
@@ -106,8 +106,66 @@
                 <mat-icon>play_arrow</mat-icon>
                 INICIAR
             </button>
-
         </ng-template>
 
+    </div> -->
+
+    <div class="text-center" [ngClass]="showWarning ? 'activeInfo':''">
+        <button (click)="startQuiz()" mat-fab extended color="primary" class="mt-5">
+            <mat-icon>play_arrow</mat-icon>
+            INICIAR
+        </button>
     </div>
+
+    <div class="quiz_box" [ngClass]="isQuizStarted? 'activeQuiz':''">
+        <header>
+            <div class="title">AREA: {{questionService.area}}</div>
+            <div class="timer">
+                <div class="time_left_txt">Tiempo</div>
+                <div class="timer_sec">{{remainingTime}}</div>
+            </div>
+            <div class="time_line" style="width: 550px;"></div>
+        </header>
+        <section *ngIf="isQuizStarted && question">
+            <div class="que_text"><span> {{question.name}}</span>
+            </div>
+            <div class="option_list">
+                <div class="option" [ngClass]="{ 'disabled': answered,
+                                            'correct':answered && option.correct,
+                                            'incorrect':answered  && !option.correct}" (click)="selectOption(option)"
+                    *ngFor="let option of question.options">
+                    <span>{{option.name}}
+
+                    </span>
+                    <ng-container *ngIf="option.isSelected">
+                        <div style="font-size: 30px;" *ngIf="option.correct; else incorrectIcon" class="icon tick">
+                            &#10004;</div>
+                        <ng-template #incorrectIcon>
+                            <div style="font-size: 30px;" class="icon cross"> &#10006;</div>
+                        </ng-template>
+
+                    </ng-container>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="row d-flex justify-content-between">
+            <button (click)="getQuestion()" mat-fab extended style="background-color: #FF006E;">
+                <mat-icon>restart_alt</mat-icon>
+                Restablecer
+            </button>
+            <button (click)="endMatch()" mat-fab extended style="background-color: #FFBE0B;">
+                <mat-icon>power_settings_new</mat-icon>
+                Finalizar
+            </button>
+            <button (click)="nextQuestion()" mat-fab extended style="background-color: #3A86FF;">
+                <mat-icon>navigate_next</mat-icon>
+                Siguiente
+            </button>
+        </div>
+    </div>
+
+
+
 </div>

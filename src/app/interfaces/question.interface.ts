@@ -8,4 +8,5 @@ export interface question {
 export interface option {
     name: string;
     correct: boolean;
+    isSelected?:boolean
 }
