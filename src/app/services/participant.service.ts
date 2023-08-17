@@ -23,8 +23,12 @@ export class ParticipantService {
   addParticipant(name: string) {
     this.participants.push({ name, score: 0 })
   }
+  addScore(position: 0 | 1) {
+    this.participants[position].score += 10
+  }
 
-  getQuestion() {
-
+  reduceScore(position: 0 | 1) {
+    if (this.participants[position].score <= 0) return
+    this.participants[position].score -= 10
   }
 }

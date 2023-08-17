@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row p-3">
+  <!-- <div class="row p-3">
         <div class="col-sm-5">
             <div class="contact-box user1 center-version shadow-lg rounded">
                 <a href="#profile.html">
@@ -59,8 +59,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- <div class="d-flex justify-content-center" style="width: 70;">
+    </div> -->
+  <!-- <div class="d-flex justify-content-center" style="width: 70;">
         <div *ngIf="started; else startTemplate">
             <div id="display-container">
                 <div class="header">
@@ -110,14 +110,14 @@
 
     </div> -->
 
-    <div class="text-center" [ngClass]="showWarning ? 'activeInfo':''">
+  <!-- <div class="text-center" [ngClass]="showWarning ? 'activeInfo':''">
         <button (click)="startQuiz()" mat-fab extended color="primary" class="mt-5">
             <mat-icon>play_arrow</mat-icon>
             INICIAR
         </button>
     </div>
 
-    <div class="quiz_box" [ngClass]="isQuizStarted? 'activeQuiz':''">
+    <div class="quiz_box" >
         <header>
             <div class="title">AREA: {{questionService.area}}</div>
             <div class="timer">
@@ -166,6 +166,235 @@
         </div>
     </div>
 
+ -->
 
+  <div
+    *ngIf="!winner; else winnerTemplate"
+    class="row mt-4 justify-content-center"
+  >
+    <div class="col-sm-2">
+      <div class="card radius-15">
+        <div class="card-body text-center">
+          <div class="p-4 border radius-15">
+            <img
+              src="../../../assets/competitor1.png"
+              width="110"
+              height="110"
+              class="rounded-circle shadow"
+              alt=""
+            />
+            <div class="row justify-content-center mt-4 g-2">
+              <div class="col-12">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Participante 1</mat-label>
+                  <input
+                    matInput
+                    [(ngModel)]="participantService.participants[0].name"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <p class="fs-1">
+                  {{ participantService.participants[0].score }}
+                </p>
+              </div>
+              <div class="col-3">
+                <button
+                  mat-mini-fab
+                  matTooltip="Warn"
+                  color="primary"
+                  aria-label="Example mini fab with a heart icon"
+                  (click)="participantService.addScore(0)"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div class="col-3">
+                <button
+                  mat-mini-fab
+                  matTooltip="Warn"
+                  color="primary"
+                  aria-label="Example mini fab with a heart icon"
+                  (click)="participantService.reduceScore(0)"
+                >
+                  <mat-icon>remove</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <div
+        class="card animate__animated animate__fadeInDown"
+        *ngIf="question; else questionHome"
+      >
+        <div class="card-header d-flex fs-2">
+          <div class="me-auto p-2">
+            <p class="fw-bold">{{ question?.area }}</p>
+          </div>
+          <div class="p-2">
+            <span class="badge bg-secondary">{{ remainingTime }}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text fw-light fs-2 lh-sm p-2">{{ question.name }}</p>
+          <img
+            *ngIf="question.imageUrl"
+            [src]="question.imageUrl"
+            class="card-img-bottom mx-auto d-block mb-2"
+          />
+          <section
+            *ngIf="showOptions"
+            class="animate__animated animate__fadeIn"
+          >
+            <div
+              appBackground
+              [isCorrect]="option.correct"
+              *ngFor="let option of question.options; let i = index"
+              class="alert border-dark disabled-option"
+              role="alert"
+              [ngClass]="{
+                'disabled-option': answered,
+                'alert-success': answered && option.correct
+              }"
+              (click)="solve(option)"
+            >
+              <span
+                class="fs-4"
+                *ngIf="!option.imageUrl; else templateImageOption"
+                >{{ i | clause }}. {{ option.name }}
+              </span>
+              <ng-template #templateImageOption>
+                <h4 class="alert-heading fs-4">
+                  {{ i | clause }}. {{ option.name }}
+                </h4>
+                <hr />
+                <div class="text-center">
+                  <img class [src]="option.imageUrl" alt="" />
+                </div>
+              </ng-template>
+            </div>
+          </section>
+        </div>
+        <div class="card-footer border-dark d-flex justify-content-between">
+          <button (click)="endParty()" mat-fab extended color="warn">
+            <mat-icon>file_download_done</mat-icon>
+            Terminar
+          </button>
+          <button
+            [disabled]="showOptions"
+            mat-fab
+            extended
+            (click)="startQuestion()"
+            color="primary"
+          >
+            <mat-icon>play_arrow</mat-icon>
+            Responder
+          </button>
+          <button mat-fab extended (click)="getQuestion()" color="accent">
+            <mat-icon>arrow_forward_ios</mat-icon>
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="card radius-15">
+        <div class="card-body text-center">
+          <div class="p-4 border radius-15">
+            <img
+              src="../../../assets/competitor2.png"
+              width="110"
+              height="110"
+              class="rounded-circle shadow"
+              alt=""
+            />
+            <div class="row justify-content-center mt-4 g-2">
+              <div class="col-12">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Participante 2</mat-label>
+                  <input
+                    matInput
+                    [value]="participantService.participants[1].name"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <p class="fs-1">
+                  {{ participantService.participants[1].score }}
+                </p>
+              </div>
 
+              <div class="col-3">
+                <button
+                  mat-mini-fab
+                  matTooltip="Warn"
+                  color="warn"
+                  aria-label="Example mini fab with a heart icon"
+                  (click)="participantService.addScore(1)"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div class="col-3">
+                <button
+                  mat-mini-fab
+                  matTooltip="Warn"
+                  color="warn"
+                  aria-label="Example mini fab with a heart icon"
+                  (click)="participantService.reduceScore(1)"
+                >
+                  <mat-icon>remove</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #questionHome>
+      <div class="card text-center">
+        <div class="card-body">
+          <h1 class="card-title fs-2 fw-bold">
+            Area:
+            {{
+              questionService.area ? questionService.area : "Seleccione un area"
+            }}
+          </h1>
+          <p class="card-text">
+            Cada pregunta tiene una duracion de 20 segundos
+          </p>
+          <button (click)="getQuestion()" mat-fab extended color="primary">
+            <mat-icon>play_arrow</mat-icon>
+            INICIAR
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #winnerTemplate>
+    <div
+      class="row mt-4 justify-content-center animate__animated animate__backInDown"
+    >
+      <div class="col-5">
+        <div class="card text-center">
+          <img
+            src="../../../assets/trofeo.png"
+            class="card-img-bottom mx-auto d-block"
+            style="width: 200px; height: 200px;"
+            alt="..."
+          />
+          <div class="card-body">
+            <h1 class="fs-2">{{ winner.name }}</h1>
+            <P class="fs-1">
+              {{ winner.score }}
+            </P>
+            <button (click)="restart()" mat-raised-button color="warn">REINICIAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>

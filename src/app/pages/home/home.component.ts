@@ -1,119 +1,138 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, interval } from 'rxjs';
-import { question } from 'src/app/interfaces/question.interface';
-import { ParticipantService, participant } from 'src/app/services/participant.service';
+import { option, question } from 'src/app/interfaces/question.interface';
+import {
+  ParticipantService,
+  participant,
+} from 'src/app/services/participant.service';
 import { QuestionService } from 'src/app/services/question.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  started: boolean = false
-  question: question
-  answered: boolean = false
-  currentRoud = 0
-
-
-  showWarning: boolean = true;
-
-  isQuizStarted: boolean = false;
-  isQuizEnded: boolean = false;
-  questionsList: any[] = [];
-  currentQuestionNo: number = 0;
-
-  remainingTime: number = 30;
-
+  question: question;
+  answered: boolean = false;
   timer = interval(1000);
-  subscription: Subscription[] = [];
-  correctAnswerCount: number = 0;
+
+  remainingTime: number = 20;
+  private timerSubscription: Subscription;
+  showOptions: boolean = false;
+  partyIsEnd: boolean = false;
+  winner: participant;
 
   constructor(
     public questionService: QuestionService,
     public participantService: ParticipantService,
     private router: Router
-  ) {
+  ) {}
+  ngOnInit(): void {}
 
-  }
-  ngOnInit(): void {
-  }
   getQuestion() {
-    this.questionService.getQuestion(this.questionService.area).subscribe(data => {
-      data.options = data.options.sort(() => Math.random() - 0.5)
-      this.question = data
-      this.remainingTime = 30
-    })
+    this.showOptions = false;
+    this.remainingTime = 20;
+    this.stopTimer();
+    this.questionService.getQuestion().subscribe((data) => {
+      this.answered = false;
+      data.options = data.options.sort(() => Math.random() - 0.5);
+      this.question = data;
+    });
   }
 
   addScore(pos: number) {
-    this.participantService.participants[pos].score += 10
+    this.participantService.participants[pos].score += 10;
   }
   removeScore(pos: number) {
-    if (this.participantService.participants[pos].score === 0) return
-    this.participantService.participants[pos].score -= 10
+    if (this.participantService.participants[pos].score === 0) return;
+    this.participantService.participants[pos].score -= 10;
   }
 
   nextQuestion() {
     if (!this.question) {
-      return
+      return;
     }
-    this.questionService.getNextQuestion(this.question._id, this.questionService.area).subscribe(data => {
-      this.answered = false
-      data.options = data.options.sort(() => Math.random() - 0.5)
-      this.question = data
-      this.remainingTime = 30
-      this.subscription.push(this.timer.subscribe(res => {
-        if (this.remainingTime != 0) {
-          this.remainingTime--;
-        }
-        if (this.remainingTime == 0) {
-          this.remainingTime = 30;
-        }
-      }))
+    // this.questionService.getNextQuestion(this.question._id, this.questionService.area).subscribe(data => {
+    //   this.answered = false
+    //   data.options = data.options.sort(() => Math.random() - 0.5)
+    //   this.question = data
+    //   this.remainingTime = 30
+    //   this.subscription.push(this.timer.subscribe(res => {
+    //     if (this.remainingTime != 0) {
+    //       this.remainingTime--;
+    //     }
+    //     if (this.remainingTime == 0) {
+    //       this.remainingTime = 30;
+    //     }
+    //   }))
 
-    })
+    // })
   }
 
-  endMatch() {
-    if (this.participantService.participants[0].score === this.participantService.participants[1].score) return
-    this.router.navigate(['presentation'])
-  }
-
-
-
-
-  finish() {
-    this.isQuizEnded = true;
-    this.isQuizStarted = false;
-  }
-
-
-
-
-  selectOption(option: any) {
-    this.subscription.forEach(element => {
-      element.unsubscribe();
-    });
-    this.answered = true
-    option.isSelected = true;
-  }
-
-  startQuiz() {
-    if (this.questionService.area === '') return
-    this.isQuizStarted = true;
-    this.getQuestion()
-    this.subscription.push(this.timer.subscribe(res => {
-      if (this.remainingTime != 0) {
+  startTimer() {
+    this.timerSubscription = interval(1000).subscribe(() => {
+      if (this.remainingTime > 0) {
         this.remainingTime--;
+      } else {
+        this.stopTimer();
       }
-      if (this.remainingTime == 0) {
-        this.getQuestion()
-      }
-    })
-    )
+    });
   }
-
-
+  stopTimer() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+  solve(option: option) {
+    this.answered = true;
+    option.selected = true;
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showCloseButton: true,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+    this.timerSubscription.unsubscribe();
+    if (option.correct) {
+      Toast.fire({
+        icon: 'success',
+        title: 'Respuesta correcta :)',
+      });
+    } else {
+      Toast.fire({
+        icon: 'error',
+        title: 'Respuesta incorrecta :(',
+      });
+    }
+    // this.questionService.solveQuestion(this.question._id).subscribe(_ => {
+    //   this.answered = true
+    //   console.log(_);
+    // })
+  }
+  startQuestion() {
+    this.showOptions = true;
+    this.startTimer();
+  }
+  endParty() {
+    if (
+      this.participantService.participants[0].score ===
+      this.participantService.participants[1].score
+    )
+      return;
+    this.winner = this.participantService.participants.sort(
+      (a, b) => b.score - a.score
+    )[0];
+    console.log(this.winner);
+  }
+  restart() {
+    this.question = undefined;
+    this.winner = undefined;
+    this.participantService.participants[0].score = 0;
+    this.participantService.participants[1].score = 0;
+  }
 }

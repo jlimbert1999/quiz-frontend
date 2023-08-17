@@ -10,12 +10,10 @@ export class BackgroundDirective {
   }
 
   @HostListener('click') answer() {
-    this.renderer.addClass(this.el.nativeElement, 'option');
     if (this.isCorrect) {
       this.renderer.addClass(this.el.nativeElement, 'correct');
     } else {
       this.renderer.addClass(this.el.nativeElement, 'incorrect');
     }
   }
-
 }

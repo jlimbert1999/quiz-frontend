@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BackgroundDirective } from './directives/background.directive';
 import { PresentationComponent } from './pages/presentation/presentation.component';
+import { ClausePipe } from './pipes/clause.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PresentationComponent } from './pages/presentation/presentation.compone
     RegisterComponent,
     HomeComponent,
     BackgroundDirective,
-    PresentationComponent
+    PresentationComponent,
+    ClausePipe
   ],
   imports: [
     BrowserModule,
