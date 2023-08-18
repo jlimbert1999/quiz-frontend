@@ -177,13 +177,13 @@
         <div class="card-body text-center">
           <div class="p-4 border radius-15">
             <img
-              src="../../../assets/competitor1.png"
+              src="../../../assets/img/logo_sacaba.jpeg"
               width="110"
               height="110"
               class="rounded-circle shadow"
               alt=""
             />
-            <div class="row justify-content-center mt-4 g-2">
+            <div class="row justify-content-center mt-4 g-4">
               <div class="col-12">
                 <mat-form-field class="example-full-width">
                   <mat-label>Participante 1</mat-label>
@@ -194,15 +194,13 @@
                 </mat-form-field>
               </div>
               <div class="col-12">
-                <p class="fs-1">
+                <p style="font-size: 100px">
                   {{ participantService.participants[0].score }}
                 </p>
               </div>
               <div class="col-3">
                 <button
-                  mat-mini-fab
-                  matTooltip="Warn"
-                  color="primary"
+                  mat-raised-button
                   aria-label="Example mini fab with a heart icon"
                   (click)="participantService.addScore(0)"
                 >
@@ -211,9 +209,7 @@
               </div>
               <div class="col-3">
                 <button
-                  mat-mini-fab
-                  matTooltip="Warn"
-                  color="primary"
+                  mat-raised-button
                   aria-label="Example mini fab with a heart icon"
                   (click)="participantService.reduceScore(0)"
                 >
@@ -239,7 +235,7 @@
           </div>
         </div>
         <div class="card-body">
-          <p class="card-text fw-light fs-2 lh-sm p-2">{{ question.name }}</p>
+          <p class="card-text fw-bold fs-2 lh-sm p-2">{{ question.name }}</p>
           <img
             *ngIf="question.imageUrl"
             [src]="question.imageUrl"
@@ -253,22 +249,22 @@
               appBackground
               [isCorrect]="option.correct"
               *ngFor="let option of question.options; let i = index"
-              class="alert border-dark disabled-option"
+              class="alert border-dark disabled-option p-0"
               role="alert"
               [ngClass]="{
                 'disabled-option': answered,
-                'alert-success': answered && option.correct
+                'response': answered && option.correct
               }"
               (click)="solve(option)"
             >
               <span
-                class="fs-4"
+                class="fs-3"
                 *ngIf="!option.imageUrl; else templateImageOption"
-                >{{ i | clause }}. {{ option.name }}
+                >{{ i | clause }}) {{ option.name }}
               </span>
               <ng-template #templateImageOption>
                 <h4 class="alert-heading fs-4">
-                  {{ i | clause }}. {{ option.name }}
+                  {{ i | clause }}) {{ option.name }}
                 </h4>
                 <hr />
                 <div class="text-center">
@@ -279,23 +275,18 @@
           </section>
         </div>
         <div class="card-footer border-dark d-flex justify-content-between">
-          <button (click)="endParty()" mat-fab extended color="warn">
+          <button (click)="endParty()" mat-raised-button>
             <mat-icon>file_download_done</mat-icon>
-            Terminar
           </button>
           <button
             [disabled]="showOptions"
-            mat-fab
-            extended
+            mat-raised-button
             (click)="startQuestion()"
-            color="primary"
           >
             <mat-icon>play_arrow</mat-icon>
-            Responder
           </button>
-          <button mat-fab extended (click)="getQuestion()" color="accent">
+          <button mat-raised-button (click)="getQuestion()">
             <mat-icon>arrow_forward_ios</mat-icon>
-            Siguiente
           </button>
         </div>
       </div>
@@ -305,13 +296,13 @@
         <div class="card-body text-center">
           <div class="p-4 border radius-15">
             <img
-              src="../../../assets/competitor2.png"
+              src="../../../assets/img/direccion_educacion.png"
               width="110"
               height="110"
               class="rounded-circle shadow"
               alt=""
             />
-            <div class="row justify-content-center mt-4 g-2">
+            <div class="row justify-content-center mt-4 g-4">
               <div class="col-12">
                 <mat-form-field class="example-full-width">
                   <mat-label>Participante 2</mat-label>
@@ -322,16 +313,14 @@
                 </mat-form-field>
               </div>
               <div class="col-12">
-                <p class="fs-1">
+                <h1 style="font-size: 100px">
                   {{ participantService.participants[1].score }}
-                </p>
+                </h1>
               </div>
 
               <div class="col-3">
                 <button
-                  mat-mini-fab
-                  matTooltip="Warn"
-                  color="warn"
+                  mat-raised-button
                   aria-label="Example mini fab with a heart icon"
                   (click)="participantService.addScore(1)"
                 >
@@ -340,9 +329,7 @@
               </div>
               <div class="col-3">
                 <button
-                  mat-mini-fab
-                  matTooltip="Warn"
-                  color="warn"
+                  mat-raised-button
                   aria-label="Example mini fab with a heart icon"
                   (click)="participantService.reduceScore(1)"
                 >
@@ -357,14 +344,10 @@
     <ng-template #questionHome>
       <div class="card text-center">
         <div class="card-body">
-          <h1 class="card-title fs-2 fw-bold">
-            Area:
-            {{
-              questionService.area ? questionService.area : "Seleccione un area"
-            }}
-          </h1>
-          <p class="card-text">
-            Cada pregunta tiene una duracion de 20 segundos
+          <p class="fw-bold lh-sm" style="font-size: 38px;">
+           <span style="font-size: 50px;">BIENVENIDO</span><br>  AL 1ER CONCURSO INTERCOLEGIAL DE SABERES Y CONOCIMIENTOS
+            DE EDUCACIÓN SECUNDARIA COMUNITARIA PRODUCTIVA <br> GOBIERNO AUTONOMO
+            MUNICIPAL DE SACABA
           </p>
           <button (click)="getQuestion()" mat-fab extended color="primary">
             <mat-icon>play_arrow</mat-icon>
@@ -383,15 +366,21 @@
           <img
             src="../../../assets/trofeo.png"
             class="card-img-bottom mx-auto d-block"
-            style="width: 200px; height: 200px;"
+            style="width: 200px; height: 200px"
             alt="..."
           />
           <div class="card-body">
-            <h1 class="fs-2">{{ winner.name }}</h1>
+            <p class="fs-3  fw-bold" style="color: green;">FELICIDADES...</p>
+            <h1 class="fs-2 fw-bold">{{ winner.name }}</h1>
             <P class="fs-1">
-              {{ winner.score }}
+              {{ winner.score }} PUNTOS
             </P>
-            <button (click)="restart()" mat-raised-button color="warn">REINICIAR</button>
+            
+            <button (click)="restart()" mat-raised-button color="warn">
+              GANADOR
+            </button>
+            <P class="mt-4 fs-3 lh-sm">DEL 1ER CONCURSO INTERCOLEGIAL DE SABERES Y CONOCIMIENTOS DE EDUCACIÓN SECUNDARIA COMUNITARIA PRODUCTIVA
+              GOBIERNO AUTONOMO MUNICIPAL DE SACABA</P>
           </div>
         </div>
       </div>
