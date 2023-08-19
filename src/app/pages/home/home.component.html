@@ -185,7 +185,7 @@
             />
             <div class="row justify-content-center mt-4 g-4">
               <div class="col-12">
-                <mat-form-field class="example-full-width">
+                <mat-form-field [style.fontSize]="'25px'" class="example-full-width">
                   <mat-label>Participante 1</mat-label>
                   <input
                     matInput
@@ -253,7 +253,7 @@
               role="alert"
               [ngClass]="{
                 'disabled-option': answered,
-                'response': answered && option.correct
+                response: answered && option.correct
               }"
               (click)="solve(option)"
             >
@@ -344,10 +344,11 @@
     <ng-template #questionHome>
       <div class="card text-center">
         <div class="card-body">
-          <p class="fw-bold lh-sm" style="font-size: 38px;">
-           <span style="font-size: 50px;">BIENVENIDO</span><br>  AL 1ER CONCURSO INTERCOLEGIAL DE SABERES Y CONOCIMIENTOS
-            DE EDUCACIÓN SECUNDARIA COMUNITARIA PRODUCTIVA <br> GOBIERNO AUTONOMO
-            MUNICIPAL DE SACABA
+          <p class="fw-bold lh-sm" style="font-size: 38px">
+            <span style="font-size: 50px">BIENVENIDO</span><br />
+            AL 1ER CONCURSO INTERCOLEGIAL DE SABERES Y CONOCIMIENTOS DE
+            EDUCACIÓN SECUNDARIA COMUNITARIA PRODUCTIVA <br />
+            GOBIERNO AUTONOMO MUNICIPAL DE SACABA
           </p>
           <button (click)="getQuestion()" mat-fab extended color="primary">
             <mat-icon>play_arrow</mat-icon>
@@ -358,10 +359,139 @@
     </ng-template>
   </div>
   <ng-template #winnerTemplate>
+    <div class="confetti-container">
+      <div class="confetti">
+        <i style="--speed: 10; --bg: yellow" class="square"></i>
+        <i style="--speed: 18; --bg: white" class="pentagram"></i>
+        <i style="--speed: 29; --bg: green" class="rectangle"></i>
+        <i style="--speed: 17; --bg: blue" class="hexagram"></i>
+        <i style="--speed: 33; --bg: red" class="pentagram"></i>
+        <i style="--speed: 26; --bg: yellow" class="dodecagram"></i>
+        <i style="--speed: 24; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 5; --bg: blue" class="wavy-line"></i>
+        <i style="--speed: 40; --bg: white" class="square"></i>
+        <i style="--speed: 17; --bg: green" class="rectangle"></i>
+        <i style="--speed: 25; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 15; --bg: yellow" class="wavy-line"> </i>
+        <i style="--speed: 32; --bg: yellow" class="pentagram"></i>
+        <i style="--speed: 25; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 37; --bg: yellow" class="dodecagram"></i>
+        <i style="--speed: 23; --bg: pink" class="wavy-line"></i>
+        <i style="--speed: 37; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 37; --bg: pink" class="wavy-line"></i>
+        <i style="--speed: 36; --bg: white" class="hexagram"></i>
+        <i style="--speed: 32; --bg: green" class="wavy-line"></i>
+        <i style="--speed: 32; --bg: yellow" class="pentagram"></i>
+        <i style="--speed: 29; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 37; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 23; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 30; --bg: pink" class="rectangle"></i>
+        <i style="--speed: 30; --bg: red" class="square"></i>
+        <i style="--speed: 18; --bg: red" class="pentagram"></i>
+        <i style="--speed: 19; --bg: green" class="rectangle"></i>
+        <i style="--speed: 16; --bg: blue" class="hexagram"></i>
+        <i style="--speed: 23; --bg: red" class="pentagram"></i>
+        <i style="--speed: 34; --bg: yellow" class="dodecagram"></i>
+        <i style="--speed: 39; --bg: pink" class="wavy-line"></i>
+        <i style="--speed: 40; --bg: purple" class="square"></i>
+        <i style="--speed: 21; --bg: green" class="rectangle"></i>
+        <i style="--speed: 14; --bg: white" class="square"></i>
+        <i style="--speed: 38; --bg: green" class="rectangle"></i>
+        <i style="--speed: 19; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 29; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 21; --bg: white" class="hexagram"></i>
+        <i style="--speed: 17; --bg: purple" class="wavy-line"></i>
+        <i style="--speed: 32; --bg: yellow" class="pentagram"></i>
+        <i style="--speed: 23; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 37; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 48; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 38; --bg: pink" class="rectangle"></i>
+        <i style="--speed: 13; --bg: red" class="pentagram"></i>
+        <i style="--speed: 49; --bg: yellow" class="dodecagram"></i>
+        <i style="--speed: 19; --bg: cyan" class="wavy-line"></i>
+        <i style="--speed: 15; --bg: steelblue" class="square"></i>
+        <i style="--speed: 10; --bg: yellow" class="square"></i>
+        <i style="--speed: 18; --bg: white" class="pentagram"></i>
+        <i style="--speed: 29; --bg: green" class="rectangle"></i>
+        <i style="--speed: 17; --bg: blue" class="hexagram"></i>
+        <i style="--speed: 33; --bg: red" class="pentagram"></i>
+        <i style="--speed: 26; --bg: yellow" class="dodecagram"></i>
+        <i style="--speed: 24; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 5; --bg: white" class="wavy-line"></i>
+        <i style="--speed: 40; --bg: purple" class="square"></i>
+        <i style="--speed: 17; --bg: green" class="rectangle"></i>
+        <i style="--speed: 25; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 15; --bg: cyan" class="wavy-line"> </i>
+        <i style="--speed: 32; --bg: yellow" class="pentagram"></i>
+        <i style="--speed: 45; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 37; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 23; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 37; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 37; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 26; --bg: white" class="hexagram"></i>
+        <i style="--speed: 32; --bg: cyan" class="wavy-line"></i>
+        <i style="--speed: 32; --bg: yellow" class="pentagram"></i>
+        <i style="--speed: 45; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 37; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 23; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 50; --bg: pink" class="rectangle"></i>
+        <i style="--speed: 30; --bg: red" class="square"></i>
+        <i style="--speed: 18; --bg: red" class="pentagram"></i>
+        <i style="--speed: 19; --bg: green" class="rectangle"></i>
+        <i style="--speed: 16; --bg: blue" class="hexagram"></i>
+        <i style="--speed: 23; --bg: red" class="pentagram"></i>
+        <i style="--speed: 33; --bg: yellow" class="dodecagram"></i>
+        <i style="--speed: 39; --bg: white" class="wavy-line"></i>
+        <i style="--speed: 40; --bg: orange" class="square"></i>
+        <i style="--speed: 21; --bg: green" class="rectangle"></i>
+        <i style="--speed: 14; --bg: white" class="square"></i>
+        <i style="--speed: 38; --bg: green" class="rectangle"></i>
+        <i style="--speed: 19; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 29; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 34; --bg: white" class="hexagram"></i>
+        <i style="--speed: 17; --bg: indigo" class="wavy-line"></i>
+        <i style="--speed: 32; --bg: yellow" class="pentagram"></i>
+        <i style="--speed: 23; --bg: white" class="square"></i>
+        <i style="--speed: 18; --bg: green" class="rectangle"></i>
+        <i style="--speed: 37; --bg: red" class="dodecagram"></i>
+        <i style="--speed: 48; --bg: pink" class="wavy-line"> </i>
+        <i style="--speed: 38; --bg: pink" class="rectangle"></i>
+        <i style="--speed: 13; --bg: red" class="pentagram"></i>
+        <i style="--speed: 49; --bg: yellow" class="dodecagram"></i>
+        <i style="--speed: 19; --bg: purple" class="wavy-line"></i>
+        <i style="--speed: 15; --bg: cyan" class="square"></i>
+      </div>
+    </div>
     <div
       class="row mt-4 justify-content-center animate__animated animate__backInDown"
     >
-      <div class="col-5">
+      <div class="col-sm-3 text-center">
+        <div class="card">
+          <div class="card-body">
+            <img
+              src="../../../assets/img/logo_sacaba.jpeg"
+              width="110"
+              height="110"
+              class="rounded-circle shadow mb-3"
+              alt=""
+            />
+            <h1 class="card-title">
+              {{ participantService.participants[0].name }}
+            </h1>
+            <h2 class="card-subtitle mb-2 text-body-secondary">
+              PUNTAJE: {{ participantService.participants[0].score }}
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
         <div class="card text-center">
           <img
             src="../../../assets/trofeo.png"
@@ -370,17 +500,42 @@
             alt="..."
           />
           <div class="card-body">
-            <p class="fs-3  fw-bold" style="color: green;">FELICIDADES...</p>
+            <p class="fs-3 fw-bold" style="color: green">FELICIDADES...</p>
             <h1 class="fs-2 fw-bold">{{ winner.name }}</h1>
-            <P class="fs-1">
-              {{ winner.score }} PUNTOS
-            </P>
-            
+            <P class="fs-1"> {{ winner.score }} PUNTOS </P>
+
             <button (click)="restart()" mat-raised-button color="warn">
               GANADOR
             </button>
-            <P class="mt-4 fs-3 lh-sm">DEL 1ER CONCURSO INTERCOLEGIAL DE SABERES Y CONOCIMIENTOS DE EDUCACIÓN SECUNDARIA COMUNITARIA PRODUCTIVA
-              GOBIERNO AUTONOMO MUNICIPAL DE SACABA</P>
+            <p class="mt-4 fs-3 lh-sm">
+              DEL 1ER CONCURSO INTERCOLEGIAL DE SABERES Y CONOCIMIENTOS DE
+              EDUCACIÓN SECUNDARIA COMUNITARIA PRODUCTIVA <br />
+              GOBIERNO AUTONOMO MUNICIPAL DE SACABA
+            </p>
+            <img
+              style="width: 60%; margin-top: 20px"
+              src="../../../assets/img/sigamos_adelante.jpg"
+              class="card-img-top"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 text-center">
+        <div class="card">
+          <div class="card-body">
+            <img
+              src="../../../assets/img/direccion_educacion.png"
+              width="110"
+              height="110"
+              class="rounded-circle shadow mb-4"
+              alt=""
+            />
+            <h1 class="card-title">
+              {{ participantService.participants[1].name }}
+            </h1>
+            <h2 class="card-subtitle mb-2 text-body-secondary">
+              PUNTAJE: {{ participantService.participants[1].score }}
+            </h2>
           </div>
         </div>
       </div>
