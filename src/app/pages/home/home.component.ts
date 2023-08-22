@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     this.stopTimer();
     this.questionService.getQuestion().subscribe((data) => {
       this.answered = false;
-      data.options = data.options.sort(() => Math.random() - 0.5);
+      // data.options = data.options.sort(() => Math.random() - 0.5);
       this.question = data;
     });
   }
@@ -87,32 +87,31 @@ export class HomeComponent implements OnInit {
     }
   }
   solve(option: option) {
-    this.answered = true;
-    option.selected = true;
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top',
-      showCloseButton: true,
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-    });
-    this.timerSubscription.unsubscribe();
-    if (option.correct) {
-      Toast.fire({
-        icon: 'success',
-        title: 'Respuesta correcta :)',
+    
+    this.questionService.solveQuestion(this.question._id).subscribe(_ => {
+      this.answered = true;
+      option.selected = true;
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showCloseButton: true,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
       });
-    } else {
-      Toast.fire({
-        icon: 'error',
-        title: 'Respuesta incorrecta :(',
-      });
-    }
-    // this.questionService.solveQuestion(this.question._id).subscribe(_ => {
-    //   this.answered = true
-    //   console.log(_);
-    // })
+      this.timerSubscription.unsubscribe();
+      if (option.correct) {
+        Toast.fire({
+          icon: 'success',
+          title: 'Respuesta correcta :)',
+        });
+      } else {
+        Toast.fire({
+          icon: 'error',
+          title: 'Respuesta incorrecta :(',
+        });
+      }
+    })
   }
   startQuestion() {
     this.showOptions = true;
@@ -127,12 +126,12 @@ export class HomeComponent implements OnInit {
     this.winner = this.participantService.participants.sort(
       (a, b) => b.score - a.score
     )[0];
-    console.log(this.winner);
   }
   restart() {
     this.question = undefined;
     this.winner = undefined;
     this.participantService.participants[0].score = 0;
     this.participantService.participants[1].score = 0;
+    this.questionService.reset().subscribe();
   }
 }
